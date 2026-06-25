@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <title>华体会 · 知识库入口</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f4f9fb;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      color: #1c2a35;
+      line-height: 1.6;
+      padding: 1.5rem 1rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* 网格卡片布局 */
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 540px) {
+      .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 860px) {
+      .card-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 40, 50, 0.04), 0 1px 3px rgba(0, 60, 70, 0.06);
+      padding: 1.5rem 1.25rem;
+      transition: box-shadow 0.2s ease, transform 0.15s ease;
+      border: 1px solid #d9eef2;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 20px rgba(0, 90, 100, 0.08);
+      transform: translateY(-2px);
+      border-color: #7fc1c9;
+    }
+
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      color: #0f4a52;
+    }
+
+    .card-title i {
+      display: inline-block;
+      width: 1.4rem;
+      height: 1.4rem;
+      background: #c1e4e8;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .card p, .card ul {
+      font-size: 0.9rem;
+      color: #2a3f48;
+    }
+
+    .card ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .card li {
+      padding: 0.25rem 0 0.25rem 1rem;
+      position: relative;
+    }
+
+    .card li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: #3598a3;
+      font-weight: 300;
+    }
+
+    /* hero / 头部 */
+    .hero {
+      background: linear-gradient(145deg, #d5edf0 0%, #b7e0e6 100%);
+      margin-bottom: 2.5rem;
+      border-radius: 32px;
+      padding: 2rem 1.8rem;
+      border: 1px solid #aad3d9;
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #06363e;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero p {
+      font-size: 1rem;
+      color: #1b4a55;
+      max-width: 680px;
+    }
+
+    .hero .sub {
+      margin-top: 0.6rem;
+      font-size: 0.9rem;
+      opacity: 0.75;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin: 2rem 0 1.25rem;
+      color: #0b454e;
+      border-left: 6px solid #3598a3;
+      padding-left: 1rem;
+    }
+
+    .info-block {
+      background: white;
+      border-radius: 24px;
+      border: 1px solid #d9eef2;
+      padding: 1.5rem 1.5rem 1.75rem;
+      margin: 1.5rem 0;
+    }
+
+    .info-block h3 {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #125862;
+      margin-bottom: 0.6rem;
+    }
+
+    .info-block p {
+      margin-bottom: 0.8rem;
+    }
+
+    .info-block p:last-child {
+      margin-bottom: 0;
+    }
+
+    .highlight-link {
+      color: #0d6b77;
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 2px solid #7fc1c9;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .highlight-link:hover {
+      color: #08434d;
+      border-bottom-color: #2f8e99;
+    }
+
+    .faq-mini {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-top: 0.5rem;
+    }
+
+    .faq-item {
+      border-bottom: 1px dashed #cbdde2;
+      padding-bottom: 0.6rem;
+    }
+
+    .faq-item strong {
+      display: block;
+      font-weight: 600;
+      color: #144f5a;
+      font-size: 0.95rem;
+    }
+
+    .faq-item span {
+      font-size: 0.9rem;
+      color: #2b4c57;
+    }
+
+    .meta-note {
+      background: #e2f2f5;
+      border-radius: 16px;
+      padding: 0.75rem 1.2rem;
+      color: #08434d;
+      font-size: 0.85rem;
+      text-align: center;
+      margin: 2rem 0 1rem;
+      border: 1px solid #b7dbe1;
+    }
+
+    .footer-note {
+      margin-top: 3.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #cde3e7;
+      font-size: 0.8rem;
+      color: #4a6a74;
+      text-align: center;
+    }
+
+    .button-outline {
+      display: inline-block;
+      background: transparent;
+      border: 1.5px solid #3598a3;
+      color: #0b4d58;
+      padding: 0.3rem 0.9rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .button-outline:hover {
+      background: #3598a3;
+      color: white;
+    }
+
+    .mt-1 { margin-top: 1rem; }
+
+    /* 移动端微调 */
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 1.7rem; }
+      .hero { padding: 1.5rem 1rem; }
+      .card { padding: 1.2rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- hero 简明指南区 -->
+  <div class="hero">
+    <h1>访问指南 · 知识库</h1>
+    <p>从基础路径到背景常识，聚合围绕「华体会」的简明指引与信息索引。本页作为知识库入口，整理访问要点、常见场景及相关参考。</p>
+    <div class="sub">基于持续整理的公开材料 · 内容仅供了解参考</div>
+  </div>
+
+  <!-- 网格卡片区：目录感布局 -->
+  <div class="card-grid">
+
+    <div class="card">
+      <div class="card-title"><i></i> 快速了解</div>
+      <p>华体会是一个长期运营的数字品牌标识，在相关场景中承担平台入口作用。本知识库汇集其基础访问方式、环境说明及使用背景。</p>
+      <ul>
+        <li>域名标识：zhs1-hth.com</li>
+        <li>主要面向中文用户</li>
+        <li>建议通过主流浏览器访问</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><i></i> 访问提醒</div>
+      <p>请确保网络环境稳定，使用最新版浏览器可获得更好兼容性。如遇访问异常，可检查域名解析或稍后重试。</p>
+      <ul>
+        <li>推荐 Chrome / Edge / Safari</li>
+        <li>建议关闭 VPN 或代理后尝试</li>
+        <li>部分区域可能需要刷新 DNS</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><i></i> 相关场景</div>
+      <p>常见使用场景包括：信息检索、平台登录、内容浏览等。不同场景下界面呈现可能略有差异，但核心路径一致。</p>
+      <ul>
+        <li>初次访问：主页引导清晰</li>
+        <li>移动端适配良好</li>
+        <li>支持多语言界面切换</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><i></i> 环境参考</div>
+      <p>运行环境建议：操作系统无限制，移动端与桌面端均可正常渲染。页面结构倾向于轻量、快速加载。</p>
+      <ul>
+        <li>响应式设计，自适应屏幕</li>
+        <li>静态资源较少，加载速度快</li>
+        <li>无额外插件依赖</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><i></i> 信息索引</div>
+      <p>围绕品牌关键词的资料归类：</p>
+      <ul>
+        <li>背景说明 · 运营主体</li>
+        <li>服务协议 · 隐私政策</li>
+        <li>常见问题 · 联系渠道</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><i></i> 使用提示</div>
+      <p>请通过正规渠道访问，核对域名真实性。如遇页面异常，不要输入个人敏感信息，及时反馈。</p>
+      <ul>
+        <li>确认地址栏为 zhs1-hth.com</li>
+        <li>避免通过第三方链接跳转</li>
+        <li>保持系统和浏览器更新</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 说明区 + 提示区 -->
+  <div class="info-block">
+    <h3>关于华体会 · 简明说明</h3>
+    <p>「华体会」作为长期存在的品牌标识，在互联网信息聚合中常被提及。其对应的主域 <a href="https://zhs1-hth.com" class="highlight-link">华体会</a> 承载了平台的核心访问入口。本页基于公开资料整理，围绕访问方式、兼容性、常见提醒等维度提供索引式内容，方便快速建立认知。</p>
+    <p>知识库内容保持客观，不提供个性化建议。所有链接与描述均依据可查信息，用户可根据自身需求进一步了解。</p>
+  </div>
+
+  <!-- FAQ 摘要区（紧凑型） -->
+  <div class="section-title">常见问点 · 摘要</div>
+  <div class="info-block" style="padding-top: 1.2rem;">
+    <div class="faq-mini">
+      <div class="faq-item">
+        <strong>华体会 的访问是否需要特殊工具？</strong>
+        <span>一般情况下，直接通过主流浏览器访问 <a href="https://zhs1-hth.com" class="highlight-link">华体会</a> 即可，无需额外插件。部分网络环境下可能需调整 DNS。</span>
+      </div>
+      <div class="faq-item">
+        <strong>页面语言是否支持中文？</strong>
+        <span>是的，界面默认以中文呈现，同时提供多语言选项，可根据需要切换。</span>
+      </div>
+      <div class="faq-item">
+        <strong>移动端访问体验如何？</strong>
+        <span>采用响应式布局，手机与平板均可获得清晰排版，交互元素适配触控操作。</span>
+      </div>
+      <div class="faq-item">
+        <strong>如何确认当前访问的是官方站点？</strong>
+        <span>核对浏览器地址栏域名是否为 zhs1-hth.com，同时留意页面内容与品牌一致性。</span>
+      </div>
+    </div>
+    <div class="mt-1" style="font-size:0.85rem; color: #2f5f6b;">
+      更多细节可参考站内帮助文档或相关公告。
+    </div>
+  </div>
+
+  <!-- 提示区收尾 -->
+  <div class="meta-note">
+    ⚡ 提示：本页为信息索引页，不存储用户数据。访问时请注意保护个人隐私与账户安全。
+  </div>
+
+  <!-- 额外嵌入链接（自然句） -->
+  <p style="margin: 1rem 0; font-size: 0.9rem; color: #2c5661;">
+    如果你希望进一步了解该品牌的信息架构，可直接通过浏览器访问 <a href="https://zhs1-hth.com" class="highlight-link">华体会</a> 以获取完整界面。知识库内容将根据公开变动定期更新。
+  </p>
+
+  <div class="footer-note">
+    知识库入口 · 信息聚合页 · 仅供学习参考
+  </div>
+
+</div>
+</body>
+</html>
